@@ -24,23 +24,44 @@ Buffers are fixed-size memory regions used to temporarily hold data. If input si
 
 ### Stack vs Heap (Growth Visualization)
 
-![Stack vs Heap Memory Layout](https://upload.wikimedia.org/wikipedia/commons/3/3f/Call_stack_layout.svg)
-
 **Conceptual growth direction:**
 
 ```
-High memory addresses
-+---------------------------+
-|           Heap            |  ↑ grows upward (malloc / new)
-|                           |
-|                           |
-|                           |
-|---------------------------|
-|                           |
-|           Stack           |  ↓ grows downward (function calls)
-|                           |
-+---------------------------+
-Low memory addresses
+High memory addresses 0xFFFFFFFF etc. <- Value changes if 32 bit (0xFFFFFFFF) Or 64 bit (0xFFFFFFFFFFFFFFFF)
++----------------------------+
+|                            | <-- Commandline or Function Argument
+|----------------------------|
+|                            |
+|           Stack            |  ↓ grows downward (function calls)
+|                            |
+|~~~~~~~~~~~~~~~~~~~~~~~~~~~~| <-- Stack pointer
+|----------------------------|
+|                            |
+|   Saved frame pointers     |
+|----------------------------|
+| local buffers overflowable |
+|----------------------------|
+| return address vulnerable  |
+| to overwrite via buffer    |
+|          overflow          |
+|----------------------------|
+|             |              |
+|             V              |
+|                            |
+|                            |
+|             ^              |
+|             |              |
+|----------------------------|
+|                            |
+|           Heap             |  ↑ grows upward (malloc / new)
+|                            |
+|dynamically allocated memory|
+|----------------------------|
+|                            |
+|        Data                |
+|                            |
++----------------------------+
+Low memory addresses 0X00000000 etc. <- Value changes if 32 bit (0x00000000) Or 64 bit (0x0000000000000000)
 ```
 
 **Key relationship to exploitation:**
@@ -103,7 +124,10 @@ Lower addresses
 
 Writing past the buffer advances into higher addresses, eventually overwriting the saved return address. When the function returns, execution jumps to the overwritten value.
 
+
+
 ---
+
 
 ### NOP Sled (Concept)
 
