@@ -110,10 +110,64 @@ A [null session](https://www.blumira.com/glossary/null-session/) occurs when a c
 - Common enumeration tools:
 ```
 
-enum4linux
+```md
+### enum4linux
+
+`enum4linux` is a Perl-based tool used to enumerate information from Windows and Samba (SMB) systems. It leverages null sessions and SMB-related calls to gather details without authentication when possible.
+
+- Commonly used for **unauthenticated SMB enumeration**
+- Useful during early-stage reconnaissance and enumeration
+
+Basic usage:
+```
+
+enum4linux <target-ip>
 
 ```
+
+Run all available enumeration modules:
 ```
+
+enum4linux -a <target-ip>
+
+```
+
+Enumerate users:
+```
+
+enum4linux -U <target-ip>
+
+```
+
+Enumerate groups:
+```
+
+enum4linux -G <target-ip>
+
+```
+
+Enumerate shares:
+```
+
+enum4linux -S <target-ip>
+
+```
+
+Enumerate OS and domain information:
+```
+
+enum4linux -o <target-ip>
+
+```
+
+- Output may include:
+  - local users and groups
+  - shared resources
+  - domain and hostname information
+  - password policy details
+- Results depend on SMB configuration and whether null sessions are permitted
+```
+
 
 rpcclient -U "" <ip>
 
