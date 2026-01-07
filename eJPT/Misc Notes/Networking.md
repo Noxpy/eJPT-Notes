@@ -1,41 +1,126 @@
+```md
 ### DNS Records
 
 - A - Resolves a hostname or domain to an IPv4 address.
 - AAAA - Resolves a hostname or domain to an IPv6 address.
-- NS - Reference to the domains nameserver.
+- NS - Reference to the domain’s nameserver.
 - MX - Resolves a domain to a mail server.
 - CNAME - Used for domain aliases.
-- TXT - Text record.
+- TXT - Text record (commonly used for metadata, verification, and security policies).
 - HINFO - Host information.
-- SOA - Domain authority.
-- SRV - Service records.
-- PTR - Resolves an IP address to a hostname
+- SOA - Domain authority and zone metadata.
+- SRV - Service records that define service locations.
+- PTR - Resolves an IP address to a hostname.
+- CAA - Specifies which Certificate Authorities are allowed to issue certificates for a domain.
+- SPF / DKIM / DMARC - Email authentication mechanisms typically stored as TXT records.
 
 - **DNS Zone Files** - Files that contain DNS records.
-
-### Get Network info
-
-- ### ``ifconfig`` alternative.
-
- You can use ``ip`` command of the ``iproute2`` suite instead of ``ifconfig`` to retrieve network info.
+  - Zone files define how a domain resolves internally and externally.
+  - Misconfigured or exposed zone transfers can leak internal hostnames and network structure.
 ```
+
+dig axfr @nameserver domain.com
+
+```
+
+---
+
+### Get Network Info
+
+- ### ``ifconfig`` alternative
+
+You can use the ``ip`` command from the ``iproute2`` suite instead of ``ifconfig`` to retrieve network information.
+```
+
 ip a s
+
 ```
-- Stands for IP addr show.
-- It provides a wider range of functionalities and is considered more powerful than ``ifconfig``.
+- Stands for `ip addr show`.
+- Provides more detailed and modern functionality than ``ifconfig``.
 
-# Find hosts 
+- View routing table:
+```
 
-- If `ping` is unable to find hosts, using `arp-scan` might help.
+ip route
 
-# Subnets  explained.
+```
 
-- __Subnet Mask__ - A subnet mask is a 32-bit number that divides an IP address into network and host portions. It consists of a combination of binary 1s (network portion) and 0s (host portion). The subnet mask helps routers and devices determine whether a destination IP address is within the same network or requires routing to a different network.
+- View active connections and listening services:
+```
 
-- **CIDR (Classless Inter-Domain Routing):** CIDR notation is a way to represent IP addresses and their associated routing prefix. It consists of the IP address followed by a slash (/) and the subnet prefix length in bits.
+ss -tunlp
 
-The subnet mask 255.255.255.0 in binary is 11111111.11111111.11111111.00000000. Counting the number of consecutive bits set to 1 gives us 24. So, the subnet mask 255.255.255.0 has a prefix length of 24, which means the first 24 bits of the IP address are considered the network portion, and the remaining 8 bits are the host portion.
+```
 
-## Whats a NULL session ?
+---
 
-A [null session](https://www.blumira.com/glossary/null-session/) occurs when you log in to a system with no username or password. NetBIOS null sessions are a vulnerability found in the Common Internet File System (CIFS) or SMB, depending on the operating system.
+### Find Hosts
+
+- If `ping` is unable to discover hosts, using `arp-scan` may help.
+- `arp-scan` operates at Layer 2 and can identify hosts even when ICMP is blocked.
+```
+
+arp-scan -l
+
+```
+
+---
+
+### Subnets Explained
+
+- **Subnet Mask** - A subnet mask is a 32-bit number that divides an IP address into network and host portions. It consists of binary 1s (network portion) and 0s (host portion). The subnet mask determines whether traffic is local or must be routed elsewhere.
+
+- **CIDR (Classless Inter-Domain Routing)** - CIDR notation represents an IP address and its routing prefix length using a slash (`/`) followed by the number of network bits.
+
+The subnet mask `255.255.255.0` in binary is:
+```
+
+11111111.11111111.11111111.00000000
+
+```
+- This contains 24 consecutive `1` bits.
+- Represented as `/24`.
+- The first 24 bits define the network portion.
+- The remaining 8 bits define the host portion.
+
+Example:
+```
+
+192.168.1.0/24
+
+```
+- Network address: `192.168.1.0`
+- Broadcast address: `192.168.1.255`
+- Usable host range: `192.168.1.1 – 192.168.1.254`
+- Total addresses: 256
+- Usable hosts: 254
+
+---
+
+## What’s a NULL Session?
+
+A [null session](https://www.blumira.com/glossary/null-session/) occurs when a connection is made to a system without providing a username or password. NetBIOS null sessions are a vulnerability found in CIFS/SMB implementations on certain systems.
+
+- Historically used to enumerate:
+  - users
+  - groups
+  - shares
+  - policies
+
+- Common enumeration tools:
+```
+
+enum4linux
+
+```
+```
+
+rpcclient -U "" <ip>
+
+```
+
+- Modern systems usually restrict null sessions, but they still appear in legacy environments, misconfigured systems, and penetration testing labs.
+
+- Null session abuse is primarily an **enumeration weakness**, not an exploitation technique.
+- Enumeration focuses on extracting information by asking systems questions rather than immediately exploiting them.
+```
