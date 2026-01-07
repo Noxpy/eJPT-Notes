@@ -6,4 +6,4 @@
 
 + Client-side attacks take advantage of human vulnerabilities as opposed to vulnerabilities in services or software running on the target system.
 
-+ Given that this attack vector involves the transfer and storage of a malicious payload on the client's system (disk), attackers need to be cognisant of AV detection. 
++ Given that this attack vector involves the transfer and storage of a malicious payload on the client's system (disk), attackers need to be cognizant of AV detection. 
