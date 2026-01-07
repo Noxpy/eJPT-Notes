@@ -1,6 +1,6 @@
 
 
-+ A client-side attack is an attack vector that involves coercing a client to execute a malicious payload on their system that consequently connects back to the attacke when executed.
++ A client-side attack is an attack vector that involves coercing a client to execute a malicious payload on their system that consequently connects back to the attacker when executed.
 
 + Client-side attacks typically utilize various social engineering techniques like generating malicious documents or portable executables (PEs).
 
