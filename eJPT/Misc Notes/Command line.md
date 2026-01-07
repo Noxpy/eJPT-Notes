@@ -77,21 +77,4 @@ cp /path/to/file .
 `chmod` is used to change file permissions in Linux. Permissions control who can read, write, or execute a file.
 
 Numeric mode example:
-
-```bash
 chmod 755 script.sh
-
-7 → owner: read, write, execute
-
-5 → group: read, execute
-
-5 → others: read, execute
-
-Symbolic mode example:
-
-chmod u+x script.sh
-
-u → user (owner)
-
-+x → add execute permission
-
