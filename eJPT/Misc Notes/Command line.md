@@ -71,3 +71,27 @@ cp /path/to/file .
 	- We can switch back to the previous terminal using `ctrl+b+0`. 
 	- We can type `exit` to exit out of a terminal. 
 	- To scroll up and down in a `tmux` terminal, we need to use `ctrl+b` with the page up and down keys in our keyboard. Once done scrolling, press `q` key to exit out of scrolling mode. 
+
+13) What is `chmod` ?
+
+`chmod` is used to change file permissions in Linux. Permissions control who can read, write, or execute a file.
+
+Numeric mode example:
+
+```bash
+chmod 755 script.sh
+
+7 → owner: read, write, execute
+
+5 → group: read, execute
+
+5 → others: read, execute
+
+Symbolic mode example:
+
+chmod u+x script.sh
+
+u → user (owner)
+
++x → add execute permission
+
