@@ -70,11 +70,64 @@ cp /path/to/file .
 	- We can open new terminals using `ctrl+b+c`.  
 	- We can switch back to the previous terminal using `ctrl+b+0`. 
 	- We can type `exit` to exit out of a terminal. 
-	- To scroll up and down in a `tmux` terminal, we need to use `ctrl+b` with the page up and down keys in our keyboard. Once done scrolling, press `q` key to exit out of scrolling mode. 
+	- To scroll up and down in a `tmux` terminal, we need to use `ctrl+b` with the page up and down keys in our keyboard. Once done scrolling, press `q` key to exit out of scrolling mode.
 
-13) What is `chmod` ?
+13. What is `chmod` ?
 
-`chmod` is used to change file permissions in Linux. Permissions control who can read, write, or execute a file.
+* `chmod` is used to change file permissions in Linux. Permissions control who can read, write, or execute a file.
 
-Numeric mode example:
+```
 chmod 755 script.sh
+```
+
+* `7` → owner: read, write, execute
+* `5` → group: read, execute
+* `5` → others: read, execute
+
+```
+chmod u+x script.sh
+```
+
+* `u` → user (owner)
+* `+x` → add execute permission
+
+14. What are SUID and SGID ?
+
+* SUID (Set User ID) and SGID (Set Group ID) allow a file to execute with the permissions of the file owner or group instead of the current user.
+
+```
+chmod 4755 file
+```
+
+```
+chmod 2755 file
+```
+
+15. How to find files with SUID permissions ?
+
+```
+find / -perm -4000 2>/dev/null
+```
+
+16. How to find writable files and directories ?
+
+```
+find / -writable 2>/dev/null
+```
+
+17. How to find files owned by root ?
+
+```
+find / -user root 2>/dev/null
+```
+
+18. How to locate files by name ?
+
+```
+find / -name filename 2>/dev/null
+```
+
+```
+find / -iname filename 2>/dev/null
+```
+
