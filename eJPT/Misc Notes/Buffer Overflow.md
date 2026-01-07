@@ -200,6 +200,9 @@ Modern defenses (NX/DEP, ASLR, stack canaries) intentionally break these assumpt
 - **Reverse Polish Notation and The Stack – Computerphile**  
   https://www.youtube.com/watch?v=7ha78yWRDlE
 
+- **Stack vs Heap. What’s the Difference and Why Should I Care? - Linux Foundation**  
+  https://www.linux.com/training-tutorials/stack-vs-heap-whats-difference-and-why-should-i-care/
+
 ---
 
 ### Secure Coding Takeaways (Language-Specific)
