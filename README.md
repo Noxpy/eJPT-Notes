@@ -172,6 +172,6 @@ Use these notes to reinforce understanding, not as a shortcut. The eJPT is desig
 
 These notes reflect my own learning process while preparing for the eJPT and working through the PTSv2 material. They are shared in the spirit of structured learning, curiosity, and practical skill-building.
 
-Study actively, break things thoughtfully, and always understand *why* something works — not just *that* it works.
+Study actively, break things thoughtfully, and always understand *why* something works — not just *that* it works. Feel free to Fork!
 
 — **Noxpy**
