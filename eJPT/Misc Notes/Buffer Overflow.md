@@ -207,14 +207,32 @@ Modern defenses (NX/DEP, ASLR, stack canaries) intentionally break these assumpt
 - **Static & dynamic analysis tools**  
   Use tools like AddressSanitizer (ASan), Valgrind, and UBSan during development to catch out‑of‑bounds writes, use‑after‑free bugs, and undefined behavior. These tools instrument memory accesses and correlate high‑level C code with the exact assembly instructions performing unsafe reads or writes.
 
-- **Why this matters**  
-  In C and C++, source code maps almost directly to assembly instructions that manipulate raw memory addresses. The CPU does not enforce safety: it executes whatever bytes the instruction pointer references. A single unchecked write can corrupt stack frames, heap metadata, or control‑flow data, and the processor will follow that corrupted state without question.
-
-- **Detection vs prevention**  
-  Analysis tools detect memory‑safety violations after unsafe code has already been compiled. They are invaluable for finding bugs, but they do not change the underlying execution model. Prevention requires changing either how code is written or how memory is managed.
-
 - **Favor memory‑safe languages when possible**  
   Languages like Rust, Go, and Java enforce bounds checking, ownership rules, or garbage collection at compile time or runtime. These constraints prevent entire classes of memory‑corruption bugs by design, breaking the direct path from high‑level mistakes to assembly‑level control‑flow manipulation.
+
+---
+
+### eJPT Specific Examples
+
+
+### **CVE-2014-6271: Shellshock**
+
+- **Description**: A buffer overflow vulnerability in **Bash** (the default shell in many Linux systems) allows remote attackers to execute arbitrary code. This vulnerability is caused by how **Bash** interprets function definitions passed through environment variables.
+- **Impact**: This vulnerability can lead to remote code execution (RCE) on affected systems when an attacker is able to pass malicious function definitions to a vulnerable Bash shell.
+- **Exploitability**: An attacker can exploit this vulnerability through web servers, SSH, or other services that use Bash and pass user input through environment variables.
+- **Relevance to eJPT**: Shellshock is a clear example of how a **buffer overflow** can allow remote code execution in a widely used application. Understanding how the vulnerability works, and identifying it using penetration testing tools, is crucial in an eJPT context.
+- **Link**: [CVE-2014-6271](https://nvd.nist.gov/vuln/detail/CVE-2014-6271)
+
+---
+
+### **CVE-2017-0144: WannaCry**
+
+- **Description**: This is a **buffer overflow** vulnerability in **SMBv1** (Server Message Block protocol version 1) in Microsoft Windows. It was exploited by the **WannaCry** ransomware, leading to widespread attacks in May 2017. The vulnerability allows remote code execution through crafted SMB packets.
+- **Impact**: WannaCry exploits this vulnerability to spread ransomware across networks, encrypting files and demanding a ransom for decryption. It caused massive disruptions to businesses and public services worldwide.
+- **Exploitability**: This vulnerability was primarily exploited via **SMBv1** by using the **EternalBlue** exploit, which allowed attackers to execute arbitrary code on vulnerable systems.
+- **Relevance to eJPT**: Understanding how buffer overflows in network protocols like SMBv1 can lead to widespread exploitation is important for identifying and mitigating such vulnerabilities during penetration testing.
+- **Link**: [CVE-2017-0144](https://nvd.nist.gov/vuln/detail/CVE-2017-0144)
+
 
 
 
