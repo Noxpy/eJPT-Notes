@@ -1,5 +1,7 @@
 ## Buffer Overflow (VERY Brief)
 
+This in my opionion is the bedrock of exploits, holding an importnat history.
+
 A **buffer overflow** is a programming error where data written to a buffer exceeds its allocated size, causing adjacent memory to be overwritten. Because memory regions often contain control data (such as saved frame pointers or return addresses), this can lead to crashes or redirection of program execution.
 
 Buffers are fixed-size memory regions used to temporarily hold data. If input size is not validated, malformed or oversized input can overwrite nearby memory, corrupt program state, or alter control flow.
