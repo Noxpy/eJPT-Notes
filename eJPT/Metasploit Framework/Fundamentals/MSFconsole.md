@@ -36,3 +36,40 @@ connect <ip> <port>
 ```
 setg RHOSTS <IP>
 ```
+
+### MSFconsole Database & Nmap Usage
+
++ Metasploit integrates with Nmap to perform **active reconnaissance** and automatically store results for later exploitation.
+
+ 
+- Check database status
+```
+db_status
+```
+
+- Import existing Nmap scan results
+```
+db_import scan_output.xml
+```
+
+- Run Nmap directly from Metasploit
+```
+db_nmap -sS -sV target
+```
+
+``db_nmap`` – runs Nmap and automatically stores results in the MSF database
+
+- View discovered hosts and services
+  
+```
+hosts
+```
+```
+services
+````
+
+- Common one‑liner (labs / internal testing)
+```bash
+db_nmap -Pn -sS -sV -O target
+````
+
