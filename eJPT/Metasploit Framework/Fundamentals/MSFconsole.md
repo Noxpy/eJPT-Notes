@@ -26,7 +26,7 @@
 - We can see the help menu of the `search` command using `search -h`
 - We can use search like this-
 ```
-swarch cve:2017 type:exploit platform:-windows
+search cve:2017 type:exploit platform:-windows
 ```
 - Use `connect` command for banner grabbing
 ```
