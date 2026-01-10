@@ -82,7 +82,7 @@ nmap -Pn -sS -T2 target
 * Decoy scanning (obfuscate source)
 
 ```bash
-nmap -D RND:5 target
+nmap -D 192.0.2.10 target
 ```
 
 * Scan specific ports (example)
