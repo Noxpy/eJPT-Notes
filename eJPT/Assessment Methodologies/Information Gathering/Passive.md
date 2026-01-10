@@ -68,6 +68,43 @@ sudo apt-get install webhttrack
 dnsrecon -d pokemon.com
 ```
 
+# Internet-wide Passive Recon (Third-Party Intelligence)
+
+## Shodan
+
+Search engine for internet-connected devices and services.
+Uses previously collected scan data (passive from attacker perspective).
+
+Can be used to identify:
+- Public IPs
+- Open ports
+- Running services
+- Web technologies
+- SSL/TLS info
+- Exposed admin panels
+- IoT / VPN / firewalls
+
+https://www.shodan.io
+
+Example queries:
+
+Search by domain:
+```
+hostname:pokemon.com
+```
+Search by IP:
+```
+net:8.8.8.8
+```
+Search by service:
+```
+http.title:"admin"
+```
+Search by tech:
+```
+product:nginx
+```
+
 # DNSDumpster
 ```
 dnsdumpster.com
