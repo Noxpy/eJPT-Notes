@@ -215,13 +215,3 @@ gobuster dir -u http://target -w wordlist.txt -b 403,404
 | 202  | Accepted        |
 | 204  | No Content      |
 | 206  | Partial Content |
-
----
-
-## Notes
-
-* AXFR success = misconfiguration
-* `-Pn` bypasses ICMP filtering
-* Lower `-T` = quieter scans
-* NSE adds logic, not just port checks
-* Save outputs early for reuse
