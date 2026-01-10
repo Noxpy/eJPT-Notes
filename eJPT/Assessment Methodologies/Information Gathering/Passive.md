@@ -151,3 +151,28 @@ dig @ns1.example.com example.com AXFR
 | TXT    | SPF/DKIM/verification |
 | SRV    | Service locator       |
 | PTR    | Reverse DNS           |
+
+
+### ProxyChains
+
+- Edit config:
+  
+```
+sudo nano /etc/proxychains4.conf
+````
+or
+
+```
+sudo vi /etc/proxychains4.conf
+```
+
+* Run tools through proxy:
+
+```
+proxychains dnsrecon -d example.com
+```
+
+```
+proxychains nmap -Pn target
+```
+
