@@ -1,167 +1,153 @@
-# Things to look for:
+### Things to Look For
 
-1) IP addresses
-2) Directories hidden from search engines
-3) Names
-4) Emails
-5) Ph. Numbers
-6) Addresses 
-7) Web Techs used
+- IPs, directories, names, emails, phone numbers, addresses  
+- Web technologies in use  
 
-# DNS Lookup
+---
+
+## DNS Lookup
 ```
-host website.com
+host example.com
 ```
 
-`host`  - DNS Lookup Utility
-Find IP addr of a website using `host` command - `host pokemon.com`
+* Resolves domain to IP(s)
+* Can be blocked behind FW, proxy, or Cloudflare
 
-# Hidden Directories
+---
 
-``robots.txt`` - File to tell search engines which directories to not show publicly. 
-It is accessible publicly. 
+## Hidden Directories
 
-# Website Indexes 
+* `robots.txt` → lists disallowed paths for search engines
+* `sitemap.xml` → full site structure for indexing
 
-- ``sitemap.xml`` - helps search engines to index the website properly. 
-```
-pokemon.com/sitemap.xml
-```
+---
 
-# Web Technology Footprint
+## Web Tech Fingerprinting
 
-- Tools:
-  1) `whatweb` - Not very neat, but works 
-```
-  whatweb pokemon.com
+```bash
+whatweb example.com
 ```
 
-- Browser Plugins:
-1) ``BuiltWith`` 
-2) ``Wappalyzer`` 
+* Browser plugins: BuiltWith, Wappalyzer
 
-# Download a website
+---
 
-- Tools:
-  1) `HTTrack` - Website copier
-  
-*Installation:*
-```
-sudo apt-get install webhttrack
+## Website Download / Scraping
+
+```bash
+sudo apt install webhttrack
+httrack http://example.com
 ```
 
-# Domain Ownership Lookup
+---
 
-- Tools:
-  1) `whois` - Whois lookup
-```
-  whois pokemon.com
-```
+## Domain Ownership Lookup
 
-# Web Recon with NetCraft
-
-- www.sitereport.netcraft.com
-
-# dnsrecon tool
-
-```
-dnsrecon -d pokemon.com
+```bash
+whois example.com
 ```
 
-# Internet-wide Passive Recon (Third-Party Intelligence)
+* Registrar, creation/expiry dates, nameservers
 
-## Shodan
+---
 
-Search engine for internet-connected devices and services.
-Uses previously collected scan data (passive from attacker perspective).
+## Passive Recon / Internet-Wide
 
-Can be used to identify:
-- Public IPs
-- Open ports
-- Running services
-- Web technologies
-- SSL/TLS info
-- Exposed admin panels
-- IoT / VPN / firewalls
+* **Shodan:** search IPs, ports, services, tech, SSL/TLS
 
-https://www.shodan.io
-
-Example queries:
-
-Search by domain:
-```
-hostname:pokemon.com
-```
-Search by IP:
-```
+```text
+hostname:example.com
 net:8.8.8.8
-```
-Search by service:
-```
 http.title:"admin"
-```
-Search by tech:
-```
 product:nginx
 ```
 
-# DNSDumpster
-```
-dnsdumpster.com
+* **DNSDumpster:** dnsdumpster.com
+* **NetCraft:** searchdns.netcraft.com / sitereport.netcraft.com
+
+---
+
+## WAF Detection
+
+```bash
+wafw00f example.com
+wafw00f example.com -a   # check all possible WAFs
 ```
 
-# WAF Detection
+---
 
-https://github.com/EnableSecurity/wafw00f
-Detects firewall and name of firewall.
+## Subdomain Enumeration
 
-```
-wafw00f pokemon.com
-```
+* **Sublist3r (passive)**
 
-To look for all possible WAF instances:
-```
-wafw00f pokemon.com -a 
+```bash
+sublist3r -d example.com
+sublist3r -d example.com -e Netcraft  # enumerate via Netcraft
 ```
 
-# Subdomain enum 
+---
 
-Using **sublist3r** for subdomain enum.
-```
-sublist3r -d pokemon.com
-```
+## Google Dorks
 
-IT IS passive recon, as it searches for subdomains in search engines. Although it has a bruteforce option, can be enabled using `-b`, but that'll be considered active.
-
-# Google dorks 
-Using Google dorks to find subdomains.
-https://www.exploit-db.com/google-hacking-database
+* Search operators:
 
 ```
-site:*.ine.com intitle:admin
+site:example.com
+inurl:login
+intitle:"index of"
+filetype:pdf
+cache:example.com
 ```
 
-If you want to look for sites with directory listing enabled:
-```
-intitle:index of
+* Look for sensitive files/directories: auth_user_file.txt, passwd.txt, wp-config.bak
+
+---
+
+## Historical Site View
+
+* Wayback Machine: [http://web.archive.org/](http://web.archive.org/)
+
+---
+
+## TheHarvester (emails, subdomains, IPs)
+
+```bash
+theHarvester -d example.com -b duckduckgo -f report.html
 ```
 
-**It'll show list of web servers hosting files (pirated movies..etc)**
+* `-f` → save results (HTML/XML/JSON)
 
-If you want to look for older ver of a website (similar to waybackmachine)
-```
-cache:pokemon.com
+---
+
+## DNS Recon
+
+* **dnsrecon**
+
+```bash
+dnsrecon -d example.com
 ```
 
-Look for websites that leaked directories with passwords:
-```
-inurl:auth_user_file.txt
-inurl:passwd.txt
+* Records: A, AAAA, MX, NS, SOA, TXT, SRV, PTR
+* Zone transfer:
+
+```bash
+dig @ns1.example.com example.com AXFR
 ```
 
-# TheHarvester tool
+* AXFR = full zone transfer, IXFR = incremental
 
-Find emails, subdomains, IP addr
-```
-theHarvester -d pokemon.com 
-```
+---
+
+## Key DNS Record Types
+
+| Record | Purpose               |
+| ------ | --------------------- |
+| A      | IPv4                  |
+| AAAA   | IPv6                  |
+| CNAME  | Alias                 |
+| MX     | Mail server           |
+| NS     | Name server           |
+| SOA    | Zone metadata         |
+| TXT    | SPF/DKIM/verification |
+| SRV    | Service locator       |
+| PTR    | Reverse DNS           |
