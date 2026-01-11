@@ -67,8 +67,6 @@ Export to CSV (useful for quick review or reporting)
 db_export -f csv -o msf_services.csv
 ```
 
----
-
 - Run Nmap directly from Metasploit
 ```
 db_nmap -sS -sV target
