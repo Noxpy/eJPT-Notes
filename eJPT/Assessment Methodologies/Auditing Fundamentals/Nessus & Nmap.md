@@ -1,30 +1,136 @@
+Here is a **terse, command-first Nessus + Nmap cheatsheet** in clean `.md` format.
+It strips prose down to **what to run, where, and why**, while keeping workflow clarity.
 
-### How to use Nessus ?
+---
 
-- Nessus Default URL is: https://localhost:8834
-- The default URL will take us to the login page.
-- We've to enter hostname, Nessus will figure out the IP by performing an discovery scan. 
-- The basic scan results will not contain much details.
-- We can perform a advanced scan (custom scan) for better analysis. 
-- After a scan is done, report can be generated in PDF, HTML or CSV format.
+# Nessus Installation & Audit Cheat Sheet
 
-### Using `nmap` for audit
-
-- The organisation we are auditing should have a network map, containing the IP addresses of all the devices connected to the network.
-- It is similar to a PenTest, but we aren't performing it in a black box point of view. 
-
-First we'll perform a scan on the subnet. 
+## Download Nessus
 
 ```
+https://www.tenable.com/downloads/nessus
+```
+
+* Linux (Debian/Ubuntu): `.deb`
+* Windows: `.msi`
+
+---
+
+## Install Nessus (Linux – Debian/Ubuntu)
+
+```bash
+sudo dpkg -i Nessus-*.deb
+sudo systemctl start nessusd
+sudo systemctl enable nessusd
+```
+
+Web UI:
+
+```text
+https://localhost:8834
+```
+
+---
+
+## Install Nessus (Windows)
+
+* Run `.msi`
+* Complete installer
+* Open:
+
+```text
+https://localhost:8834
+```
+
+---
+
+## Initial Setup (Once)
+
+* Create admin user
+* Activate (Essentials / license)
+* Wait for plugin sync
+
+---
+
+## Nmap – Asset Discovery (Audit Scope Known)
+
+Scan subnet:
+
+```bash
 nmap 192.168.100.0/24
 ```
 
-*The scan result should provide us with multiple hosts connected to the network and port scan on each of them.*
+Scan specific hosts (detailed):
 
-We can then perform an aggressive scan (A) on individual hosts.
-
-```
+```bash
 nmap 192.168.100.1,2,3,4 -A
 ```
 
-*The aggressive scan should provide us a more detailed overview, but it'll take a longer time to complete.*
+---
+
+## Nmap → Nessus (Recommended Workflow)
+
+Export Nmap results:
+
+```bash
+nmap -sS -sV -oX nmap_scan.xml 192.168.100.0/24
+```
+
+Import into Nessus:
+
+```
+Scans → Import → nmap_scan.xml
+```
+
+Why:
+
+* Faster scans
+* Accurate service mapping
+* Less network noise
+
+---
+
+## Run Nessus Scan
+
+1. **New Scan**
+2. **Advanced Scan**
+3. Targets → IPs or imported data
+4. Launch
+
+---
+
+## Export Results
+
+* PDF → reporting
+* HTML → review
+* CSV → analysis
+
+---
+
+## Mental Model (Audit)
+
+```
+Nmap  → what is exposed
+Nessus → what is vulnerable / misconfigured
+```
+
+No exploitation. No evasion. Known scope.
+
+---
+
+## One-Page Workflow
+
+```text
+Install Nessus
+↓
+Discover hosts (nmap)
+↓
+Export nmap XML
+↓
+Import into Nessus
+↓
+Advanced Scan
+↓
+Report
+```
+
