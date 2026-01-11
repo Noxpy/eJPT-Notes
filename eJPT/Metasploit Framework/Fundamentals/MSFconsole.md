@@ -52,6 +52,23 @@ db_status
 db_import scan_output.xml
 ```
 
+- Export all database content
+
+```bash
+db_export -f xml -a msf_export.xml
+```
+
+* `-f xml` → structured, tool-friendly format
+* `-a` → export all collected data
+
+Export to CSV (useful for quick review or reporting)
+
+```bash
+db_export -f csv -o msf_services.csv
+```
+
+---
+
 - Run Nmap directly from Metasploit
 ```
 db_nmap -sS -sV target
