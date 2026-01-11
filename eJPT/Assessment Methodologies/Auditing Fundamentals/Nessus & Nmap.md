@@ -1,8 +1,3 @@
-Here is a **terse, command-first Nessus + Nmap cheatsheet** in clean `.md` format.
-It strips prose down to **what to run, where, and why**, while keeping workflow clarity.
-
----
-
 # Nessus Installation & Audit Cheat Sheet
 
 ## Download Nessus
