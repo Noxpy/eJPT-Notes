@@ -1,4 +1,4 @@
-```md
+
 ### DNS Records
 
 - A - Resolves a hostname or domain to an IPv4 address.
@@ -18,9 +18,7 @@
   - Zone files define how a domain resolves internally and externally.
   - Misconfigured or exposed zone transfers can leak internal hostnames and network structure.
 ```
-
 dig axfr @nameserver domain.com
-
 ```
 
 ---
@@ -31,25 +29,19 @@ dig axfr @nameserver domain.com
 
 You can use the ``ip`` command from the ``iproute2`` suite instead of ``ifconfig`` to retrieve network information.
 ```
-
 ip a s
-
 ```
 - Stands for `ip addr show`.
 - Provides more detailed and modern functionality than ``ifconfig``.
 
 - View routing table:
 ```
-
 ip route
-
 ```
 
 - View active connections and listening services:
 ```
-
 ss -tunlp
-
 ```
 
 ---
@@ -59,9 +51,7 @@ ss -tunlp
 - If `ping` is unable to discover hosts, using `arp-scan` may help.
 - `arp-scan` operates at Layer 2 and can identify hosts even when ICMP is blocked.
 ```
-
 arp-scan -l
-
 ```
 
 ---
@@ -74,9 +64,7 @@ arp-scan -l
 
 The subnet mask `255.255.255.0` in binary is:
 ```
-
 11111111.11111111.11111111.00000000
-
 ```
 - This contains 24 consecutive `1` bits.
 - Represented as `/24`.
@@ -85,9 +73,7 @@ The subnet mask `255.255.255.0` in binary is:
 
 Example:
 ```
-
 192.168.1.0/24
-
 ```
 - Network address: `192.168.1.0`
 - Broadcast address: `192.168.1.255`
@@ -108,9 +94,8 @@ A [null session](https://www.blumira.com/glossary/null-session/) occurs when a c
   - policies
 
 - Common enumeration tools:
-```
 
-```md
+
 ### enum4linux
 
 `enum4linux` is a Perl-based tool used to enumerate information from Windows and Samba (SMB) systems. It leverages null sessions and SMB-related calls to gather details without authentication when possible.
@@ -120,44 +105,37 @@ A [null session](https://www.blumira.com/glossary/null-session/) occurs when a c
 
 Basic usage:
 ```
-
 enum4linux <target-ip>
-
 ```
 
 Run all available enumeration modules:
+
 ```
-
 enum4linux -a <target-ip>
-
 ```
 
 Enumerate users:
+
 ```
-
 enum4linux -U <target-ip>
-
 ```
 
 Enumerate groups:
+
 ```
-
 enum4linux -G <target-ip>
-
 ```
 
 Enumerate shares:
+
 ```
-
 enum4linux -S <target-ip>
-
 ```
 
 Enumerate OS and domain information:
+
 ```
-
 enum4linux -o <target-ip>
-
 ```
 
 - Output may include:
@@ -166,15 +144,13 @@ enum4linux -o <target-ip>
   - domain and hostname information
   - password policy details
 - Results depend on SMB configuration and whether null sessions are permitted
+
+  
 ```
-
-
 rpcclient -U "" <ip>
-
 ```
 
 - Modern systems usually restrict null sessions, but they still appear in legacy environments, misconfigured systems, and penetration testing labs.
 
 - Null session abuse is primarily an **enumeration weakness**, not an exploitation technique.
 - Enumeration focuses on extracting information by asking systems questions rather than immediately exploiting them.
-```
